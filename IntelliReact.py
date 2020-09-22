@@ -1,6 +1,6 @@
-import tkinter as tk
-import random as rn
-import time
+import tkinter as tk    #import tkinter gui lib package
+import random as rn     #import random for random clickbox coordinate generator
+import time             #import time for calculation of time duration between successfull clicks 
 
 
 #function to change position of clickbox
