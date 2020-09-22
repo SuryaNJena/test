@@ -2,6 +2,8 @@ import tkinter as tk
 import random as rn
 import time
 
+
+#function to change position of clickbox
 def change():
     global x,y
     start = time.time()
@@ -28,18 +30,18 @@ def change():
             c.delete("all")            
     c.bind("<Button-1>", callback)
 
-def felp():
+def felp(): 
     text.insert(tk.INSERT,"\nCLICK ON CHANGE BUTTON AND THEN CLICK "
                             "ON THE CIRCLE IN THE BLACK AREA THE "
                             "TIME  LAG BETWEEN THE CLICK OF CHANGE "
                             "BUTTON AND CIRCLE WILL GIVE U A REACTION TIME ::::"
                             "LET'S  SEE HOW FAST U CAN GO")
 
-def savg():
+def savg(): #calculating average
     global avg
     text.insert(tk.INSERT,"\nAverage Reaction time is "+str(avg)+" secs")
 
-if __name__=='__main__':
+if __name__=='__main__':  #main function block
     avg=0
     sam=0
     ctr=0
@@ -67,4 +69,4 @@ if __name__=='__main__':
     text = tk.Text(w)
     text.pack(side=tk.BOTTOM)
     
-    w.mainloop()
+    w.mainloop()  #start GUI and keep looping
