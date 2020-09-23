@@ -42,11 +42,14 @@ def savg(): #calculating average
     text.insert(tk.INSERT,"\nAverage Reaction time is "+str(avg)+" secs")
 
 if __name__=='__main__':  #main function block
+    #initialization
     avg=0
     sam=0
     ctr=0
     x=599
     y=599
+    
+    #gui design for window
     w=tk.Tk()
     w.title("InteliReact")
     frame=tk.Frame(w)
