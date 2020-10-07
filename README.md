@@ -1,1 +1,4 @@
-# Basics of Python including Jupyter Notebooks too.
+# Basics of Python
+
+#Jupyter notebooks are included too .
+
