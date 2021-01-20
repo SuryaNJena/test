@@ -1,3 +1,4 @@
+#! /usr/bin/python3
 import tkinter as tk    #import tkinter gui lib package
 import random as rn     #import random for random clickbox coordinate generator
 import time             #import time for calculation of time duration between successfull clicks 
@@ -62,11 +63,11 @@ if __name__=='__main__':  #main function block
     bu1 = tk.Button(w, text="CHANGE THE CLICKBOX POSITION", font="Consolas", command=change)
     bu1.pack(side=tk.LEFT,fill=tk.BOTH)
     
-    bu4 = tk.Button(w, text="QUIT TEST", font="Impact", command=w.destroy)
+    bu4 = tk.Button(w, text="QUIT TEST", command=w.destroy)
     bu4.pack(side=tk.RIGHT)
-    bu3 = tk.Button(w, text="SHOW AVERAGE", font="Impact", command=savg)
+    bu3 = tk.Button(w, text="SHOW AVERAGE", command=savg)
     bu3.pack(side=tk.RIGHT)
-    bu2 = tk.Button(w, text="HELP", font="Consolas", command=felp)
+    bu2 = tk.Button(w, text="HELP", command=felp)
     bu2.pack(side=tk.RIGHT)
 
     text = tk.Text(w)
