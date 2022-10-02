@@ -1,3 +1,3 @@
-# Random Python Programs currently in development
+# Programs that need testing.
 
 ### These need a lot of improvements.
