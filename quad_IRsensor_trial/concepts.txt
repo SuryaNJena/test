@@ -1,0 +1,6 @@
+*****important pointers*********
+1. use loops for initialization
+2. dont forget to scale loops
+3. 
+
+
