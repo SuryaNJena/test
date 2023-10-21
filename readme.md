@@ -17,7 +17,7 @@ Testing is an essential part of software development. It helps identify and prev
 
 The repository is organized as follows:
 
-- **/code**: This directory contains the code that I want to test. It includes various projects and code samples that I'm currently working on.
+- **/Code**: This directory contains the code that I want to test. It includes various projects and code samples that I'm currently working on.
 
 Feel free to explore the code and tests I've written, and you're welcome to offer feedback or suggestions.
 
