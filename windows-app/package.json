@@ -1,10 +1,12 @@
 {
   "name": "windows-cloud-app",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Electron wrapper for Windows 365 Cloud PC web client on Linux",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "start:safe": "electron . --disable-gpu --disable-software-rasterizer --enable-features=UseOzonePlatform --ozone-platform-hint=auto",
+    "start:verbose": "ELECTRON_ENABLE_LOGGING=1 ELECTRON_ENABLE_STACK_DUMPING=1 electron ."
   },
   "keywords": [
     "electron",
