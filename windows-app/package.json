@@ -1,0 +1,19 @@
+{
+  "name": "windows-cloud-app",
+  "version": "1.0.0",
+  "description": "Electron wrapper for Windows 365 Cloud PC web client on Linux",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "keywords": [
+    "electron",
+    "windows-365",
+    "cloud-pc"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^37.0.0"
+  }
+}
