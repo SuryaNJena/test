@@ -1,5 +1,5 @@
 const path = require('path');
-const { app, BrowserWindow, shell } = require('electron');
+const { app, BrowserWindow } = require('electron');
 
 const CLOUD_PC_URL = 'https://windows.cloud.microsoft/';
 const APP_ICON = path.join(__dirname, 'windows-app-icon.svg');
@@ -7,8 +7,8 @@ const APP_ICON = path.join(__dirname, 'windows-app-icon.svg');
 app.commandLine.appendSwitch('enable-features', 'UseOzonePlatform');
 app.commandLine.appendSwitch('ozone-platform-hint', 'auto');
 
-function createWindow() {
-  const win = new BrowserWindow({
+function createBaseWindowConfig() {
+  return {
     width: 1400,
     height: 900,
     minWidth: 1024,
@@ -16,20 +16,40 @@ function createWindow() {
     autoHideMenuBar: true,
     backgroundColor: '#7f1d1d',
     icon: APP_ICON,
-    show: false,
     webPreferences: {
       contextIsolation: true,
       sandbox: true,
       devTools: true
     }
+  };
+}
+
+function createChildWindow(url) {
+  const child = new BrowserWindow({
+    ...createBaseWindowConfig(),
+    parent: BrowserWindow.getFocusedWindow() || undefined,
+    show: false
   });
 
-  win.once('ready-to-show', () => win.show());
-  win.loadURL(CLOUD_PC_URL);
+  child.once('ready-to-show', () => child.show());
+  child.loadURL(url);
+  attachWebContentsHandlers(child);
 
+  return child;
+}
+
+function attachWebContentsHandlers(win) {
   win.webContents.setWindowOpenHandler(({ url }) => {
-    shell.openExternal(url);
+    createChildWindow(url);
     return { action: 'deny' };
+  });
+
+  win.webContents.on('will-navigate', (event, url) => {
+    const currentUrl = win.webContents.getURL();
+    if (currentUrl && url !== currentUrl) {
+      event.preventDefault();
+      win.loadURL(url);
+    }
   });
 
   win.webContents.on('did-fail-load', (_event, errorCode, errorDescription, validatedURL) => {
@@ -39,6 +59,17 @@ function createWindow() {
   win.webContents.on('render-process-gone', (_event, details) => {
     console.error('Renderer process exited:', details);
   });
+}
+
+function createWindow() {
+  const win = new BrowserWindow({
+    ...createBaseWindowConfig(),
+    show: false
+  });
+
+  win.once('ready-to-show', () => win.show());
+  win.loadURL(CLOUD_PC_URL);
+  attachWebContentsHandlers(win);
 }
 
 app.whenReady().then(() => {

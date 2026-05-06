@@ -10,7 +10,13 @@ This behaves like a standalone app window on Fedora/Linux and includes a red app
 
 - `windows-app-icon.svg` (red app icon)
 - `windows-cloud-app.desktop` (ready-to-copy launcher template that already references the icon)
-This makes it behave like a standalone app window on Fedora/Linux.
+
+## Browser request behavior
+
+All popup/new-window requests are handled **inside Electron**.
+
+- Links that request a new browser window open in a new Electron child window.
+- Requests are no longer sent to your system's default browser.
 
 ## Requirements
 
@@ -18,7 +24,6 @@ This makes it behave like a standalone app window on Fedora/Linux.
 - npm
 
 ## Install
-## Run
 
 ```bash
 cd windows-app
@@ -53,27 +58,5 @@ npm run start:verbose
 ```bash
 cp windows-cloud-app.desktop ~/.local/share/applications/
 chmod +x ~/.local/share/applications/windows-cloud-app.desktop
-npm start
-```
-
-## Optional: create a desktop launcher on Fedora
-
-Create `~/.local/share/applications/windows-cloud-app.desktop`:
-
-```ini
-[Desktop Entry]
-Name=Windows Cloud App
-Comment=Microsoft Windows 365 Cloud PC
-Exec=/usr/bin/env bash -lc 'cd /absolute/path/to/windows-app && npm start'
-Icon=computer
-Terminal=false
-Type=Application
-Categories=Network;RemoteAccess;
-StartupNotify=true
-```
-
-Then run:
-
-```bash
 update-desktop-database ~/.local/share/applications
 ```
