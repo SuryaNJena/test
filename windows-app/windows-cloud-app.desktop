@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Name=Windows Cloud App
+Comment=Microsoft Windows 365 Cloud PC
+Exec=/usr/bin/env bash -lc 'cd /absolute/path/to/windows-app && npm start'
+Path=/absolute/path/to/windows-app
+Icon=/absolute/path/to/windows-app/windows-app-icon.svg
+Terminal=false
+Type=Application
+Categories=Network;RemoteAccess;
+StartupNotify=true
