@@ -18,6 +18,10 @@ All popup/new-window requests are handled **inside Electron**.
 - Links that request a new browser window open in a new Electron child window.
 - Requests are no longer sent to your system's default browser.
 
+## Microsoft sign-in note
+
+If Microsoft sign-in endpoints appeared to receive `GET` instead of `POST`, that was caused by app-level navigation interception. The app now lets browser navigations proceed normally so auth POST flows are preserved.
+
 ## Requirements
 
 - Node.js 20+

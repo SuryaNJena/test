@@ -44,14 +44,8 @@ function attachWebContentsHandlers(win) {
     return { action: 'deny' };
   });
 
-  win.webContents.on('will-navigate', (event, url) => {
-    const currentUrl = win.webContents.getURL();
-    if (currentUrl && url !== currentUrl) {
-      event.preventDefault();
-      win.loadURL(url);
-    }
-  });
-
+  // Do not override navigations here. Intercepting and replaying with loadURL()
+  // can convert POST-based auth navigations into GET requests.
   win.webContents.on('did-fail-load', (_event, errorCode, errorDescription, validatedURL) => {
     console.error(`Failed to load ${validatedURL}: [${errorCode}] ${errorDescription}`);
   });
