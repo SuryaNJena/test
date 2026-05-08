@@ -28,9 +28,14 @@ The app now uses Electron global shortcuts (while focused) to forward these keys
 Important platform limits on Linux:
 
 - `Alt+Tab` is controlled by your desktop environment/window manager and cannot be reliably hijacked by Electron.
-- `Win+V` (`Super+V`) is also typically reserved by the OS/desktop and may fail to register.
+- `Win+V` (`Super+V`) is typically reserved by GNOME Shell, so capture is best-effort only on Fedora GNOME/Wayland.
+- The app also registers `Alt+V` as a Linux fallback for clipboard-history style paste behavior when `Super+V` cannot be captured.
 
 If registration fails, Electron logs a warning in the terminal.
+
+## Browser compatibility mode
+
+The app now sends Edge-like Windows browser identity signals (`User-Agent`, user-agent metadata, and client-hint platform headers) so Microsoft sign-in and Cloud PC checks treat the wrapper as a supported browser.
 
 ## Microsoft sign-in note
 
