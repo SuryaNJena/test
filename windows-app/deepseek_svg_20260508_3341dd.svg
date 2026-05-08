@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- More cyan Microsoft Fluent Blue Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00A6EF" />
+      <stop offset="100%" stop-color="#003D7A" />
+    </linearGradient>
+    
+    <!-- Subtle white gradient for the window panes -->
+    <linearGradient id="paneGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="100%" stop-color="#E5F5FF" />
+    </linearGradient>
+
+    <!-- Drop shadow for the window panes -->
+    <filter id="dropShadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.3" />
+    </filter>
+  </defs>
+
+  <!-- Main rounded square background -->
+  <rect x="16" y="16" width="480" height="480" rx="80" ry="80" fill="url(#bgGrad)" />
+
+  <!-- Four window panes with smaller gaps -->
+  <g filter="url(#dropShadow)">
+    <!-- Top-Left Pane -->
+    <rect x="84" y="84" width="160" height="160" rx="12" ry="12" fill="url(#paneGrad)" />
+    <!-- Top-Right Pane -->
+    <rect x="268" y="84" width="160" height="160" rx="12" ry="12" fill="url(#paneGrad)" />
+    <!-- Bottom-Left Pane -->
+    <rect x="84" y="268" width="160" height="160" rx="12" ry="12" fill="url(#paneGrad)" />
+    <!-- Bottom-Right Pane -->
+    <rect x="268" y="268" width="160" height="160" rx="12" ry="12" fill="url(#paneGrad)" />
+  </g>
+
+  <!-- Fluent Design glass highlight overlays -->
+  <rect x="16" y="16" width="480" height="480" rx="80" ry="80" fill="url(#bgGrad)" opacity="0.15" mix-blend-mode="overlay" />
+  
+  <!-- Outer stroke for depth -->
+  <rect x="16" y="16" width="480" height="480" rx="80" ry="80" fill="none" stroke="#FFFFFF" stroke-opacity="0.25" stroke-width="2.5" />
+  
+  <!-- Inner subtle border -->
+  <rect x="28" y="28" width="456" height="456" rx="68" ry="68" fill="none" stroke="#FFFFFF" stroke-opacity="0.1" stroke-width="1.5" />
+</svg>

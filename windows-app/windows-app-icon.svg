@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Windows Cloud App icon">
-  <rect width="256" height="256" rx="32" fill="#b91c1c"/>
-  <g fill="#ffffff">
-    <path d="M36 46.5 118 34v88H36z"/>
-    <path d="M132 32l88-13v103h-88z"/>
-    <path d="M36 130h82v88l-82-12.5z"/>
-    <path d="M132 130h88v106l-88-12.5z"/>
-  </g>
-</svg>

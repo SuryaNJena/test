@@ -1,10 +1,10 @@
 [Desktop Entry]
 Version=1.0
-Name=Windows Cloud App
+Name=Windows 365
 Comment=Microsoft Windows 365 Cloud PC
-Exec=/usr/bin/env bash -lc 'cd /absolute/path/to/windows-app && npm start'
-Path=/absolute/path/to/windows-app
-Icon=/absolute/path/to/windows-app/windows-app-icon.svg
+Exec=/usr/bin/env bash -lc 'cd /home/jena/Apps/test/windows-app && npm start'
+Path=/home/jena/Apps/test/windows-app/
+Icon=/home/jena/Apps/test/windows-app/deepseek_svg_20260508_3341dd.svg
 Terminal=false
 Type=Application
 Categories=Network;RemoteAccess;
