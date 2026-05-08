@@ -32,6 +32,10 @@ Important platform limits on Linux:
 
 If registration fails, Electron logs a warning in the terminal.
 
+## Browser compatibility mode
+
+The app now sends an Edge-like user agent for all requests so Microsoft sign-in and Cloud PC checks treat the wrapper as a supported browser.
+
 ## Microsoft sign-in note
 
 If Microsoft sign-in endpoints appeared to receive `GET` instead of `POST`, that was caused by app-level navigation interception. The app now lets browser navigations proceed normally so auth POST flows are preserved.

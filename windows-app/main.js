@@ -1,15 +1,24 @@
 const path = require('path');
-const { app, BrowserWindow, globalShortcut } = require('electron');
+const { app, BrowserWindow, globalShortcut, session } = require('electron');
 
 const CLOUD_PC_URL = 'https://windows.cloud.microsoft/';
 const APP_ICON = path.join(__dirname, 'windows-app-icon.svg');
+
+const EDGE_LIKE_USER_AGENT = [
+  'Mozilla/5.0 (X11; Linux x86_64)',
+  'AppleWebKit/537.36 (KHTML, like Gecko)',
+  'Chrome/136.0.0.0',
+  'Safari/537.36',
+  'Edg/136.0.0.0'
+].join(' ');
 
 app.commandLine.appendSwitch('enable-features', 'UseOzonePlatform');
 app.commandLine.appendSwitch('ozone-platform-hint', 'auto');
 
 const shortcutBindings = [
   { accelerator: 'CommandOrControl+V', keyCode: 'V', modifiers: ['control'] },
-  { accelerator: 'CommandOrControl+Shift+P', keyCode: 'P', modifiers: ['control', 'shift'] }
+  { accelerator: 'CommandOrControl+Shift+P', keyCode: 'P', modifiers: ['control', 'shift'] },
+  { accelerator: 'Super+V', keyCode: 'V', modifiers: ['meta'] }
 ];
 
 function sendShortcutToCloudPc(win, keyCode, modifiers) {
@@ -53,7 +62,8 @@ function createBaseWindowConfig() {
       contextIsolation: true,
       sandbox: true,
       devTools: true
-    }
+    },
+    userAgent: EDGE_LIKE_USER_AGENT
   };
 }
 
@@ -102,6 +112,11 @@ function createWindow() {
 }
 
 app.whenReady().then(() => {
+  session.defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {
+    details.requestHeaders['User-Agent'] = EDGE_LIKE_USER_AGENT;
+    callback({ requestHeaders: details.requestHeaders });
+  });
+
   createWindow();
 
   app.on('activate', () => {
