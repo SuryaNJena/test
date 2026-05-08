@@ -26,6 +26,18 @@ const EDGE_LIKE_UA_METADATA = {
   mobile: false
 };
 
+const EDGE_CLIENT_HINT_HEADERS = {
+  'Sec-CH-UA': '"Chromium";v="136", "Microsoft Edge";v="136", "Not=A?Brand";v="99"',
+  'Sec-CH-UA-Full-Version': '"136.0.0.0"',
+  'Sec-CH-UA-Full-Version-List': '"Chromium";v="136.0.0.0", "Microsoft Edge";v="136.0.0.0", "Not=A?Brand";v="99.0.0.0"',
+  'Sec-CH-UA-Mobile': '?0',
+  'Sec-CH-UA-Platform': '"Windows"',
+  'Sec-CH-UA-Platform-Version': '"10.0.0"',
+  'Sec-CH-UA-Arch': '"x86"',
+  'Sec-CH-UA-Model': '""',
+  'Sec-CH-UA-Bitness': '"64"'
+};
+
 app.commandLine.appendSwitch('enable-features', 'UseOzonePlatform');
 app.commandLine.appendSwitch('ozone-platform-hint', 'auto');
 
@@ -131,8 +143,15 @@ function createWindow() {
 app.whenReady().then(() => {
   session.defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {
     details.requestHeaders['User-Agent'] = EDGE_LIKE_USER_AGENT;
-    details.requestHeaders['Sec-CH-UA-Platform'] = '"Windows"';
-    details.requestHeaders['Sec-CH-UA-Mobile'] = '?0';
+
+    Object.entries(EDGE_CLIENT_HINT_HEADERS).forEach(([name, value]) => {
+      details.requestHeaders[name] = value;
+    });
+
+    if (!details.requestHeaders['Accept-Language']) {
+      details.requestHeaders['Accept-Language'] = 'en-US,en;q=0.9';
+    }
+
     callback({ requestHeaders: details.requestHeaders });
   });
 
