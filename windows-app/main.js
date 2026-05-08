@@ -5,12 +5,26 @@ const CLOUD_PC_URL = 'https://windows.cloud.microsoft/';
 const APP_ICON = path.join(__dirname, 'windows-app-icon.svg');
 
 const EDGE_LIKE_USER_AGENT = [
-  'Mozilla/5.0 (X11; Linux x86_64)',
+  'Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
   'AppleWebKit/537.36 (KHTML, like Gecko)',
   'Chrome/136.0.0.0',
   'Safari/537.36',
   'Edg/136.0.0.0'
 ].join(' ');
+
+const EDGE_LIKE_UA_METADATA = {
+  brands: [
+    { brand: 'Chromium', version: '136' },
+    { brand: 'Microsoft Edge', version: '136' },
+    { brand: 'Not=A?Brand', version: '99' }
+  ],
+  fullVersion: '136.0.0.0',
+  platform: 'Windows',
+  platformVersion: '10.0.0',
+  architecture: 'x86',
+  model: '',
+  mobile: false
+};
 
 app.commandLine.appendSwitch('enable-features', 'UseOzonePlatform');
 app.commandLine.appendSwitch('ozone-platform-hint', 'auto');
@@ -18,7 +32,8 @@ app.commandLine.appendSwitch('ozone-platform-hint', 'auto');
 const shortcutBindings = [
   { accelerator: 'CommandOrControl+V', keyCode: 'V', modifiers: ['control'] },
   { accelerator: 'CommandOrControl+Shift+P', keyCode: 'P', modifiers: ['control', 'shift'] },
-  { accelerator: 'Super+V', keyCode: 'V', modifiers: ['meta'] }
+  { accelerator: 'Super+V', keyCode: 'V', modifiers: ['meta'] },
+  { accelerator: 'Alt+V', keyCode: 'V', modifiers: ['alt'] }
 ];
 
 function sendShortcutToCloudPc(win, keyCode, modifiers) {
@@ -83,6 +98,8 @@ function createChildWindow(url) {
 }
 
 function attachWebContentsHandlers(win) {
+  win.webContents.setUserAgent(EDGE_LIKE_USER_AGENT, EDGE_LIKE_UA_METADATA);
+
   win.webContents.setWindowOpenHandler(({ url }) => {
     createChildWindow(url);
     return { action: 'deny' };
@@ -114,6 +131,8 @@ function createWindow() {
 app.whenReady().then(() => {
   session.defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {
     details.requestHeaders['User-Agent'] = EDGE_LIKE_USER_AGENT;
+    details.requestHeaders['Sec-CH-UA-Platform'] = '"Windows"';
+    details.requestHeaders['Sec-CH-UA-Mobile'] = '?0';
     callback({ requestHeaders: details.requestHeaders });
   });
 
