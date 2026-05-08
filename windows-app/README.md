@@ -18,6 +18,20 @@ All popup/new-window requests are handled **inside Electron**.
 - Links that request a new browser window open in a new Electron child window.
 - Requests are no longer sent to your system's default browser.
 
+## Shortcut capture support
+
+The app now uses Electron global shortcuts (while focused) to forward these keys directly to the Cloud PC session:
+
+- `Ctrl+V`
+- `Ctrl+Shift+P`
+
+Important platform limits on Linux:
+
+- `Alt+Tab` is controlled by your desktop environment/window manager and cannot be reliably hijacked by Electron.
+- `Win+V` (`Super+V`) is also typically reserved by the OS/desktop and may fail to register.
+
+If registration fails, Electron logs a warning in the terminal.
+
 ## Microsoft sign-in note
 
 If Microsoft sign-in endpoints appeared to receive `GET` instead of `POST`, that was caused by app-level navigation interception. The app now lets browser navigations proceed normally so auth POST flows are preserved.

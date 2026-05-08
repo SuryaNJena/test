@@ -1,11 +1,44 @@
 const path = require('path');
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, globalShortcut } = require('electron');
 
 const CLOUD_PC_URL = 'https://windows.cloud.microsoft/';
 const APP_ICON = path.join(__dirname, 'windows-app-icon.svg');
 
 app.commandLine.appendSwitch('enable-features', 'UseOzonePlatform');
 app.commandLine.appendSwitch('ozone-platform-hint', 'auto');
+
+const shortcutBindings = [
+  { accelerator: 'CommandOrControl+V', keyCode: 'V', modifiers: ['control'] },
+  { accelerator: 'CommandOrControl+Shift+P', keyCode: 'P', modifiers: ['control', 'shift'] }
+];
+
+function sendShortcutToCloudPc(win, keyCode, modifiers) {
+  if (!win || win.isDestroyed()) return;
+  const wc = win.webContents;
+  wc.focus();
+  wc.sendInputEvent({ type: 'keyDown', keyCode, modifiers });
+  wc.sendInputEvent({ type: 'keyUp', keyCode, modifiers });
+}
+
+function registerShortcutsForWindow(win) {
+  win.on('focus', () => {
+    shortcutBindings.forEach(({ accelerator, keyCode, modifiers }) => {
+      const ok = globalShortcut.register(accelerator, () => {
+        const target = BrowserWindow.getFocusedWindow();
+        sendShortcutToCloudPc(target, keyCode, modifiers);
+      });
+      if (!ok) {
+        console.warn(`Could not register shortcut: ${accelerator}`);
+      }
+    });
+  });
+
+  win.on('blur', () => {
+    shortcutBindings.forEach(({ accelerator }) => {
+      globalShortcut.unregister(accelerator);
+    });
+  });
+}
 
 function createBaseWindowConfig() {
   return {
@@ -34,6 +67,7 @@ function createChildWindow(url) {
   child.once('ready-to-show', () => child.show());
   child.loadURL(url);
   attachWebContentsHandlers(child);
+  registerShortcutsForWindow(child);
 
   return child;
 }
@@ -64,6 +98,7 @@ function createWindow() {
   win.once('ready-to-show', () => win.show());
   win.loadURL(CLOUD_PC_URL);
   attachWebContentsHandlers(win);
+  registerShortcutsForWindow(win);
 }
 
 app.whenReady().then(() => {
@@ -74,6 +109,10 @@ app.whenReady().then(() => {
       createWindow();
     }
   });
+});
+
+app.on('will-quit', () => {
+  globalShortcut.unregisterAll();
 });
 
 app.on('window-all-closed', () => {
